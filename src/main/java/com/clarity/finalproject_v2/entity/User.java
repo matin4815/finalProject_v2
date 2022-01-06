@@ -3,11 +3,13 @@ package com.clarity.finalproject_v2.entity;
 
 import com.clarity.finalproject_v2.enums.Roles;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,6 +29,7 @@ public class User implements Serializable {
 
     private String name;
     private String email;
+    private String profilePick;
 
     private boolean enabled = true;
 
@@ -35,6 +38,10 @@ public class User implements Serializable {
     @JoinColumn(name = "username", referencedColumnName = "username"))
     @Enumerated(EnumType.STRING)
     private List<Roles> roles;
+
+//    @Transient
+//    @JsonIgnore
+//    private MultipartFile picFile;
 
     @NotNull
     @Column(unique = true)

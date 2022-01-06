@@ -20,7 +20,7 @@ public class CategoryController {
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
-    @GetMapping(value = "/getcategories")
+    @GetMapping(value = "/get/categories")
     public List<String> getAllCategoryNames(){
         return this.categoryService.findAllCategoryNames();
     }
@@ -28,5 +28,13 @@ public class CategoryController {
     @PostMapping(value = {"/save"})
     public CategoryDTO saveCategory(@RequestBody CategoryDTO categoryDTO){
         return modelMapper.map(categoryService.saveCategoryByDTO(categoryDTO), CategoryDTO.class);
+    }
+    @GetMapping(value = "/get/{categoryName}")
+    public String getCategoryName(@PathVariable(value = "categoryName") String categoryName){
+        return categoryService.findCategory(categoryName);
+    }
+    @DeleteMapping(value = "/delete/{categoryName}")
+    public String deleteCategory(@PathVariable(value = "categoryName") String categoryName){
+        return categoryService.deleteCategory(categoryName);
     }
 }

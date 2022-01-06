@@ -5,6 +5,7 @@ import com.clarity.finalproject_v2.entity.Category;
 import com.clarity.finalproject_v2.repository.CategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,20 @@ public class CategoryService {
         return categoryNames;
     }
 
+    @Transactional
     public Category saveCategoryByDTO(CategoryDTO categoryDTO){
         Category category = modelMapper.map(categoryDTO, Category.class);
         return categoryRepository.save(category);
+    }
+    public String findCategory(String categoryName){
+        Category category = this.categoryRepository.findCategory(categoryName);
+        return category.getName();
+    }
+
+    @Transactional
+    public String deleteCategory(String categoryName) {
+        Category category = this.categoryRepository.findCategory(categoryName);
+        categoryRepository.delete(category);
+        return "deleted sucssefully";
     }
 }
